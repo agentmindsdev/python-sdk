@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentminds"
+version = "0.5.0"
+description = "AgentMinds Python SDK — cross-site collective intelligence for production AI agents. Auto-capture errors + push/pull patterns from the network pool."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "AgentMinds" }]
+keywords = [
+    "monitoring", "errors", "observability", "logging",
+    "fastapi", "django", "flask",
+    "ai-agents", "llm-observability", "agent-monitoring",
+    "mcp", "arp", "cross-site-intelligence",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Bug Tracking",
+    "Topic :: System :: Logging",
+    "Topic :: System :: Monitoring",
+]
+# Stdlib-only — no required deps. Framework integrations import their
+# host framework lazily and only when imported by the user.
+dependencies = []
+
+[project.optional-dependencies]
+fastapi = ["fastapi>=0.95"]
+flask = ["flask>=2.0"]
+dev = ["pytest>=7", "fastapi", "flask", "httpx"]
+
+[project.scripts]
+agentminds = "agentminds._cli:main"
+
+[project.urls]
+Homepage = "https://agentminds.dev"
+Documentation = "https://agentminds.dev/docs/python"
+Repository = "https://github.com/agentmindsdev/python-sdk"
+Issues = "https://github.com/agentmindsdev/python-sdk/issues"
+Changelog = "https://github.com/agentmindsdev/python-sdk/blob/main/CHANGELOG.md"
+Spec = "https://github.com/agentmindsdev/profile"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agentminds"]
