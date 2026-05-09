@@ -97,7 +97,7 @@ on your site, we tell you:
 > *Numbers in this example (14 / 9 / 0.78) are illustrative.*
 > *Actual peer counts vary by pattern fingerprint and current*
 > *network state. The pool today has 6 active contributing sites*
-> *and 3,232 production-observed patterns — see live numbers at*
+> *and 3,233 production-observed patterns — see live numbers at*
 > *[/sync/pool-stats](https://api.agentminds.dev/api/v1/sync/pool-stats).*
 
 That cross-site lift is the moat — it doesn't exist in any single-tenant
@@ -272,7 +272,7 @@ python -m agentminds recommendations  # print the top 10 ranked rules
 ## Honest status
 
 This is early-stage. The pool has **6 active contributing sites**
-and **3,232 production-observed patterns** as of this writing.
+and **3,233 production-observed patterns** as of this writing.
 Cross-site "peer sites solving the same problem" recommendations
 activate as the network grows; for now the SDK serves top
 patterns from the pool plus rotational picks for registered
