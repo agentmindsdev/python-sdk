@@ -4,17 +4,65 @@ All notable changes to the `agentminds` Python SDK are documented here.
 
 ## [Unreleased]
 
-### Documentation
-- The AgentMinds central server now publishes the **Agent Reporting
-  Standard (ARS) v1.0** at
-  [`AGENT_REPORTING_PROFILE.md`](https://github.com/agentmindsdev/profile/blob/main/AGENT_REPORTING_PROFILE.md)
-  with a JSON Schema at [`docs/schemas/agent_report.schema.json`](https://github.com/agentmindsdev/profile/blob/main/schemas/agent_report.schema.json).
-- This SDK captures **runtime events** (errors, web vitals, custom),
-  which is one of the inputs the central server normalizes into the
-  ARS warning lifecycle (`status`, `last_seen`, `fingerprint`). No
-  SDK code change is required for ARS conformance — the central
-  server enriches events on ingest. SDK ARS L2 alignment (sending
-  ARS-format `fingerprint` directly) is planned for 0.5.0.
+## [0.5.0] — 2026-05-08
+
+Minor release. Backwards compatible.
+
+### Added
+- **`agentminds.sync` module** — high-level helpers for the
+  AgentMinds `/sync` API surface so integrators never hand-roll JSON
+  payloads or manage the `X-AgentMinds-Key` header by hand.
+  - **Push (your data → AgentMinds):** `sync.report(api_key,
+    site_id, agent, metrics, warnings, learned_patterns,
+    project_info)` posts a structured agent report to
+    `/api/v1/sync/bulk`.
+  - **Pull (AgentMinds insights → your code):**
+    `sync.recommendations(api_key, limit=...)`,
+    `sync.benchmarks(api_key, site_id)`,
+    `sync.my_role(api_key)`,
+    `sync.network_position(api_key)`,
+    `sync.issues(api_key, status="open")`. All return parsed JSON;
+    no manual `requests` / header plumbing.
+- **`agentminds.metrics` module** — canonical metric emitters that
+  mirror the server-side registry. Lets a Python app push metrics by
+  the same names the central pool uses (`hsts_present`,
+  `ssl_days_remaining`, `bounce_rate`, etc.) without hand-coding
+  the schema. Avoids the "your push got grade-D because metric
+  names didn't match" failure mode.
+
+### Changed
+- README rewritten around the **cross-site collective intelligence**
+  positioning: the SDK pushes runtime events + agent reports into a
+  shared pool and pulls personalized recommendations back. Install
+  steps unchanged; the framing leads with the network value rather
+  than the captured-events value.
+- `pyproject.toml` metadata expanded:
+  - 6 URL entries in `[project.urls]` — Homepage, Documentation,
+    Repository, Issues, Changelog, Spec.
+  - `Spec` link now points at `agentmindsdev/profile` (the public
+    ARP spec repo, CC-BY-4.0).
+  - `keywords` extended for collective-intelligence / ai-agents
+    discoverability on PyPI.
+
+### Compatibility
+- Compatible with AgentMinds backend `a8c23b3+` (tier-aware
+  shaping: `/sync/trial-rules`, `/sync/personalized-rules`).
+- Compatible with `agentminds-mcp 1.3.0+`.
+- Implements the response-shape contract published in
+  [ARP spec v1.3.0](https://github.com/agentmindsdev/profile)
+  (`top_production_observed` + `top_documented` split arrays,
+  `negative_evidence`, optional `reversibility` field — passed
+  through unchanged from server response, no client-side parsing
+  required).
+- Python `>=3.8` supported.
+
+### Internal
+- Test suite at 83 tests (pytest), all passing.
+- 0 Turkish characters in `.py` / `.toml` / `.cfg` / `.md` source
+  files (English-only contract aligned with the company-wide
+  user-facing strings rule).
+- `python -m build --sdist` verified clean (hatchling backend,
+  isolated venv).
 
 ## [0.4.2] — 2026-04-27
 
