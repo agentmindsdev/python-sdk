@@ -3,7 +3,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/agentminds.svg)](https://pypi.org/project/agentminds/)
 [![Python](https://img.shields.io/pypi/pyversions/agentminds.svg)](https://pypi.org/project/agentminds/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![ARP 1.1](https://img.shields.io/badge/ARP-1.1-blue)](https://github.com/agentmindsdev/profile)
+[![ARP 1.3.0](https://img.shields.io/badge/ARP-1.3.0-blue)](https://github.com/agentmindsdev/profile)
 [![MCP-aware](https://img.shields.io/badge/MCP-extensions--wg-green)](https://modelcontextprotocol.io)
 
 > **AgentMinds is a cross-site collective intelligence pool for production
@@ -11,6 +11,25 @@
 > learned; every site pulls back the patterns its specific stack needs
 > — solved fixes from peer sites, network benchmarks, ranked rules.
 > One pip install, one push, you're in the pool.
+
+> **v0.5.0** (2026-05-08): ARP 1.3.0 alignment —
+> `top_production_observed` + `top_documented` split arrays (B1),
+> `negative_evidence` array consumption (A3), `reversibility`
+> field passthrough (B2). See [CHANGELOG.md](CHANGELOG.md).
+
+## How AgentMinds works (3 tiers)
+
+The Python SDK supports all three tiers exposed by the AgentMinds
+backend. Anonymous trial requires no configuration; registered
+and personalised need an API key from
+[agentminds.dev/onboard](https://agentminds.dev/onboard) (or via
+`python -m agentminds connect`).
+
+| Mode | Patterns / day | What you give | What you get |
+|---|---|---|---|
+| **Anonymous trial** | 3 popular | nothing | Top relevance-scored patterns from the public pool |
+| **Registered (no push)** | 10 rotational | URL + name | Daily-rotated slice of the top-50 pool, seeded by `site_id` |
+| **Personalised** | unlimited | agent reports | Stack-matched recommendations, cross-site references, negative evidence |
 
 This SDK does two things:
 
@@ -74,6 +93,12 @@ on your site, we tell you:
 - 9 of them solved it with the same one-line patch
 - Your stack (FastAPI + Pydantic 2 + email-validator 2.x) matches 7/9
 - Confidence the patch will work for you: **0.78**
+
+> *Numbers in this example (14 / 9 / 0.78) are illustrative.*
+> *Actual peer counts vary by pattern fingerprint and current*
+> *network state. The pool today has 6 active contributing sites*
+> *and 2,598 production-observed patterns — see live numbers at*
+> *[/sync/pool-stats](https://api.agentminds.dev/api/v1/sync/pool-stats).*
 
 That cross-site lift is the moat — it doesn't exist in any single-tenant
 APM. The runtime SDK shipping crashes is the on-ramp; the `sync.*`
@@ -244,12 +269,34 @@ python -m agentminds recommendations  # print the top 10 ranked rules
 
 ---
 
+## Honest status
+
+This is early-stage. The pool has **6 active contributing sites**
+and **2,598 production-observed patterns** as of this writing.
+Cross-site "peer sites solving the same problem" recommendations
+activate as the network grows; for now the SDK serves top
+patterns from the pool plus rotational picks for registered
+users.
+
+We're inside the first 100-founder window — **94 lifetime-free
+slots remaining**. Sites that connect during this window keep
+the founder tier (all features, free, forever). Live numbers at
+[/sync/pool-stats](https://api.agentminds.dev/api/v1/sync/pool-stats).
+
+If you're evaluating this for your team, the
+[**ARP spec**](https://github.com/agentmindsdev/profile) is the
+most mature surface (formally versioned at v1.3.0 with extension
+points and a [reorientation clause](https://github.com/agentmindsdev/profile#reorientation-clause)).
+The SDK is v0.5.x — actively iterated. Bug reports welcome.
+
+---
+
 ## Links
 
 - **Homepage**: <https://agentminds.dev>
 - **Dashboard**: <https://agentminds.dev/dashboard>
 - **Docs**: <https://agentminds.dev/docs/python>
-- **Spec (ARP 1.1)**: <https://github.com/agentmindsdev/profile>
+- **Spec (ARP 1.3.0)**: <https://github.com/agentmindsdev/profile>
 - **Node SDK**: [`@agentmindsdev/node`](https://www.npmjs.com/package/@agentmindsdev/node)
 - **PyPI**: <https://pypi.org/project/agentminds/>
 - **Issues**: <https://github.com/agentmindsdev/python-sdk/issues>
