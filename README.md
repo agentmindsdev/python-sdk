@@ -17,19 +17,19 @@
 > `negative_evidence` array consumption (A3), `reversibility`
 > field passthrough (B2). See [CHANGELOG.md](CHANGELOG.md).
 
-## How AgentMinds works (3 tiers)
+## How AgentMinds works (3 access shapes)
 
-The Python SDK supports all three tiers exposed by the AgentMinds
-backend. Anonymous trial requires no configuration; registered
-and personalised need an API key from
-[agentminds.dev/onboard](https://agentminds.dev/onboard) (or via
-`python -m agentminds connect`).
+AgentMinds is free for everyone. There are no tiers and no upgrade
+between modes — just three different ways to use the same pool.
+Anonymous trial requires no configuration; registered + push need
+an API key from [agentminds.dev/onboard](https://agentminds.dev/onboard)
+(or via `python -m agentminds connect`).
 
-| Mode | Patterns / day | What you give | What you get |
-|---|---|---|---|
-| **Anonymous trial** | 3 popular | nothing | Top relevance-scored patterns from the public pool |
-| **Registered (no push)** | 10 rotational | URL + name | Daily-rotated slice of the top-50 pool, seeded by `site_id` |
-| **Personalised** | unlimited | agent reports | Stack-matched recommendations, cross-site references, negative evidence |
+| Mode | What you give | What you get |
+|---|---|---|
+| **Anonymous** | nothing | Top patterns from the public pool |
+| **Registered** | URL + name | Stack-matched personalised recommendations |
+| **Push back** | agent reports | Pool grows for everyone; cross-site references surface when matches exist |
 
 This SDK does two things:
 
@@ -274,13 +274,13 @@ python -m agentminds recommendations  # print the top 10 ranked rules
 This is early-stage. The pool has **6 active contributing sites**
 and **3,233 production-observed patterns** as of this writing.
 Cross-site "peer sites solving the same problem" recommendations
-activate as the network grows; for now the SDK serves top
-patterns from the pool plus rotational picks for registered
-users.
+activate as the network grows; for now the SDK serves top patterns
+from the pool plus stack-matched personalised recommendations to
+registered sites.
 
-We're inside the first 100-founder window — **94 lifetime-free
-slots remaining**. Sites that connect during this window keep
-the founder tier (all features, free, forever). Live numbers at
+AgentMinds is **free for everyone, always** — no tiers, no
+paywalls, no upgrade prompts. Pull what you need, push what you
+can. Live numbers at
 [/sync/pool-stats](https://api.agentminds.dev/api/v1/sync/pool-stats).
 
 If you're evaluating this for your team, the
